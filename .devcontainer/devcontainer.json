@@ -1,0 +1,7 @@
+{
+  "name": "app-devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/k3d:1": {}
+  }
+}
