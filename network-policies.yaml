@@ -1,0 +1,43 @@
+# network-policies.yaml
+---
+# 1. Allow Keycloak to access PostgreSQL
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-allow-keycloak
+  namespace: keycloak
+spec:
+  podSelector:
+    matchLabels:
+      app: postgresql-db
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: example-kc
+      ports:
+        - protocol: TCP
+          port: 5432
+---
+# 2. Allow Envoy Gateway Proxies to access Keycloak
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: keycloak-allow-envoy
+  namespace: keycloak
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: example-kc
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: envoy-gateway-system
+      ports:
+        - protocol: TCP
+          port: 8080

@@ -36,3 +36,8 @@ echo $LATEST
 curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/${LATEST}/install.sh | bash -s ${LATEST}
 kubectl get pods -n olm
 ```
+
+kubectl create secret generic keycloak-db-secret \
+  --from-literal=username=testuser \
+  --from-literal=password=testpassword \
+  -n keycloak
