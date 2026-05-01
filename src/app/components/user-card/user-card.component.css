@@ -1,0 +1,4 @@
+.panel { margin-top: 1rem; padding: .8rem; display:flex; gap:.65rem; align-items:center; }
+.avatar { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:var(--primary-soft); border:1px solid var(--border); font-weight:700; }
+h3 { margin:0; font-size: .96rem; }
+p { margin:.2rem 0 0; color: var(--muted); font-size:.83rem; }

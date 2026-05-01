@@ -1,0 +1,5 @@
+.ui-card { padding: .95rem; border-radius: 14px; background: var(--surface-soft); }
+span { color: var(--muted); font-size: .82rem; }
+h3 { margin: .5rem 0; font-size: 1.4rem; }
+small { color: var(--success); }
+.warn { color: var(--warning); }

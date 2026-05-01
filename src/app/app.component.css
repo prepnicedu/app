@@ -1,0 +1,39 @@
+.dashboard-layout {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+}
+
+.sidebar,
+.content,
+:host ::ng-deep .panel,
+:host ::ng-deep .ui-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.sidebar {
+  padding: 1.25rem;
+  position: sticky;
+  top: 1rem;
+  height: fit-content;
+}
+
+.sidebar h1 { margin: 0; font-size: 1.3rem; }
+.sidebar p { color: var(--muted); margin-top: .4rem; }
+
+.content { padding: 1.25rem; }
+header { display:flex; justify-content:space-between; align-items: baseline; margin-bottom: 1rem; }
+header span { color: var(--muted); font-size: .9rem; }
+
+.stats-grid { display:grid; grid-template-columns: repeat(2, minmax(180px,1fr)); gap: .75rem; }
+.panels { margin-top: .75rem; display:grid; grid-template-columns: repeat(2,minmax(220px,1fr)); gap: .75rem; }
+
+@media (max-width: 900px) {
+  .dashboard-layout { grid-template-columns: 1fr; }
+  .stats-grid, .panels { grid-template-columns: 1fr; }
+}

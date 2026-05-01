@@ -1,0 +1,4 @@
+.panel { padding: .9rem; }
+ul { list-style:none; padding:0; margin: .5rem 0 0; display:grid; gap:.45rem; }
+li { background: var(--surface-soft); padding: .55rem; border-radius: 10px; color: var(--muted); }
+strong { color: var(--text); font-weight: 600; }
