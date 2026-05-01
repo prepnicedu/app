@@ -1,19 +1,31 @@
-### Install kubectl:
+### Install kind:
 
 ```
-curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-
-chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+kind create cluster
 ```
 
-### Install minikube:
+### Install apisix:
 
 ```
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+kubectl create namespace apisix
+helm repo add apisix https://apache.github.io/apisix-helm-chart
+helm repo update
 
-chmod +x minikube-linux-amd64
-sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+helm install apisix apisix/apisix \
+  --create-namespace \
+  --namespace apisix \
+  --set dashboard.enabled=true \
+  --set ingress-controller.enabled=true \
+  --set ingress-controller.config.apisix.serviceNamespace=apisix
+
+kubectl get pods -n apisix
+
+kubectl port-forward svc/apisix-admin -n apisix 9180:9180
+
+edd1c9f034335f136f87ad84b625c8f1
 ```
 
 ### Install OLM:
