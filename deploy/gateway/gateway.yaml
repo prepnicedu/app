@@ -1,0 +1,34 @@
+# deploy/gateway/gateway.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: eg
+spec:
+  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: eg
+  namespace: default
+spec:
+  gatewayClassName: eg
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:          # <-- Add this block
+        namespaces:
+          from: All
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:          # <-- Add this block
+        namespaces:
+          from: All
+      # Terminates TLS at Envoy using your self-signed certificate
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: example-tls-secret
+            namespace: keycloak

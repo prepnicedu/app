@@ -1,0 +1,15 @@
+# deploy/charts/v1-service/values.yaml
+
+replicaCount: 1
+image:
+  repository: v1-service
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  port: 8080
+
+# Expose to Envoy API Gateway
+gateway:
+  name: eg
+  namespace: default
+  path: /v1-service

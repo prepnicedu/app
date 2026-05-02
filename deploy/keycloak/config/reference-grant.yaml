@@ -1,0 +1,15 @@
+# deploy/keycloak/config/reference-grant.yaml
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: gateway-tls-grant
+  namespace: keycloak
+spec:
+  from:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    namespace: default
+  to:
+  - group: ""
+    kind: Secret
+    name: example-tls-secret

@@ -1,4 +1,5 @@
-# operatorgroup.yaml
+# deploy/keycloak/operator/operatorgroup.yaml
+
 kind: OperatorGroup
 apiVersion: operators.coreos.com/v1
 metadata:

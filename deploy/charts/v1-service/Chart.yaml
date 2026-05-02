@@ -1,0 +1,9 @@
+# deploy/charts/v1-service/Chart.yaml
+
+apiVersion: v2
+name: v1-service
+version: 0.1.0
+dependencies:
+  - name: common
+    version: 0.1.0
+    repository: "file://../common"

@@ -1,4 +1,5 @@
-# subscription.yaml
+# deploy/keycloak/operator/subscription.yaml
+
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:

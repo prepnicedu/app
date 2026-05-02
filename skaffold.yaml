@@ -1,0 +1,43 @@
+# skaffold.yaml
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: my-microservice
+
+build:
+  local:
+    push: false
+  artifacts:
+    - image: v1-service
+      custom:
+        # Build using Bazel -> tag specifically for Skaffold -> inject into K3d
+        buildCommand: |
+          bazel run //services/v1-service:load
+          docker tag v1-service:latest $IMAGE
+          k3d image import $IMAGE -c mycluster
+        dependencies:
+          paths:
+            - services/v1-service/**/*.go
+            - services/v1-service/BUILD.bazel
+
+manifests:
+  rawYaml:
+    - deploy/gateway/gateway.yaml
+
+    # Keycloak Deployment & Routing files
+    - deploy/keycloak/db/example-postgres.yaml
+    - deploy/keycloak/config/example-kc.yaml
+    - deploy/keycloak/config/reference-grant.yaml
+    - deploy/keycloak/config/keycloak-route.yaml
+    
+
+deploy:
+  helm:
+    releases:
+      - name: v1-service
+        chartPath: deploy/charts/v1-service
+        valuesFiles:
+          - deploy/charts/v1-service/values.yaml
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_v1_service}}"
+          image.tag: "{{.IMAGE_TAG_v1_service}}"

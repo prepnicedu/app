@@ -1,0 +1,5 @@
+# BUILD.bazel
+load("@gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/my-org/my-microservice
+gazelle(name = "gazelle")

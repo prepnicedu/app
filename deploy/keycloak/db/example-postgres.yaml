@@ -1,4 +1,4 @@
-# example-postgres.yaml
+# deploy/keycloak/db/example-postgres.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

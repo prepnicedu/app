@@ -1,0 +1,31 @@
+# === Bazel ===
+bazel-*
+*.bazel.lock
+distdir/
+output_base/
+output_user_root/
+
+# Bazel build outputs
+bazel-bin/
+bazel-testlogs/
+bazel-out/
+
+# Bzlmod / external repos cache
+external/
+.bazelrc.user
+
+# === Go ===
+bin/
+*.exe
+*.test
+*.out
+
+# Go modules cache (optional)
+vendor/
+
+# === IDE ===
+.vscode/
+.idea/
+
+# === OS ===
+.DS_Store
