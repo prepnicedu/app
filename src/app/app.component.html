@@ -1,0 +1,33 @@
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <h1>Nova Admin</h1>
+    <p>Custom Angular UI kit prototype</p>
+    <app-user-card></app-user-card>
+    <app-quick-action></app-quick-action>
+  </aside>
+
+  <main class="content">
+    <header>
+      <h2>Dashboard Overview</h2>
+      <span>Friday sync · 09:30 AM</span>
+    </header>
+
+    <section class="stats-grid">
+      <app-stat-card *ngFor="let metric of metrics" [label]="metric.label" [value]="metric.value" [delta]="metric.delta" [tone]="metric.tone"></app-stat-card>
+    </section>
+
+    <section class="panels">
+      <app-section-card title="Team Focus">
+        <p>Refining onboarding flow and polishing the new design system tokens.</p>
+      </app-section-card>
+      <app-recent-activity></app-recent-activity>
+      <app-section-card title="Upcoming Tasks">
+        <ul>
+          <li>Finalize API contract for notifications.</li>
+          <li>Prepare QA checklist for sprint release.</li>
+          <li>Draft docs for component variants.</li>
+        </ul>
+      </app-section-card>
+    </section>
+  </main>
+</div>

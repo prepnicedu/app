@@ -1,0 +1,4 @@
+.panel { padding: .9rem; }
+h3 { margin-top: .1rem; margin-bottom: .65rem; }
+p, li { color: var(--muted); }
+ul { margin: 0; padding-left: 1.2rem; }
