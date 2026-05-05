@@ -1,5 +1,4 @@
-# deploy/charts/v1-service/templates/application.yaml
-
+# deploy/charts/v2-service/templates/application.yaml
 {{ include "common.deployment" . }}
 ---
 {{ include "common.service" . }}

@@ -10,7 +10,6 @@ build:
   artifacts:
     - image: v1-service
       custom:
-        # Build using Bazel -> tag specifically for Skaffold -> inject into K3d
         buildCommand: |
           bazel run //services/v1-service:load
           docker tag v1-service:latest $IMAGE
@@ -19,18 +18,26 @@ build:
           paths:
             - services/v1-service/**/*.go
             - services/v1-service/BUILD.bazel
+    # --- ADD v2-service HERE ---
+    - image: v2-service
+      custom:
+        buildCommand: |
+          bazel run //services/v2-service:load
+          docker tag v2-service:latest $IMAGE
+          k3d image import $IMAGE -c mycluster
+        dependencies:
+          paths:
+            - services/v2-service/**/*.go
+            - services/v2-service/BUILD.bazel
 
 manifests:
   rawYaml:
     - deploy/gateway/gateway.yaml
-
-    # Keycloak Deployment & Routing files
     - deploy/keycloak/db/example-postgres.yaml
     - deploy/keycloak/config/example-kc.yaml
     - deploy/keycloak/config/reference-grant.yaml
     - deploy/keycloak/config/keycloak-route.yaml
     
-
 deploy:
   helm:
     releases:
@@ -41,3 +48,11 @@ deploy:
         setValueTemplates:
           image.repository: "{{.IMAGE_REPO_v1_service}}"
           image.tag: "{{.IMAGE_TAG_v1_service}}"
+      # --- ADD v2-service HERE ---
+      - name: v2-service
+        chartPath: deploy/charts/v2-service
+        valuesFiles:
+          - deploy/charts/v2-service/values.yaml
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_v2_service}}"
+          image.tag: "{{.IMAGE_TAG_v2_service}}"

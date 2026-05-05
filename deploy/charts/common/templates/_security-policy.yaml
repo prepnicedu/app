@@ -1,0 +1,24 @@
+# deploy/charts/common/templates/_security-policy.yaml
+{{- define "common.security-policy" -}}
+{{- if .Values.jwtAuth.enabled }}
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: {{ .Release.Name }}-jwt-auth
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    # Binds to the protected route generated above
+    name: {{ .Release.Name }}-protected
+  jwt:
+    providers:
+      - name: {{ .Values.jwtAuth.providerName | default "keycloak-jwt" }}
+        issuer: {{ .Values.jwtAuth.issuer }}
+        remoteJWKS:
+          uri: {{ .Values.jwtAuth.remoteJwksUri }}
+        claimToHeaders:
+          - claim: preferred_username
+            header: X-Remote-User
+{{- end }}
+{{- end -}}

@@ -1,0 +1,38 @@
+# services/v2-service/BUILD.bazel
+
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+
+go_library(
+    name = "v2-service_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/my-org/my-microservice/services/v2-service",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "v2-service",
+    embed = [":v2-service_lib"],
+    visibility =["//visibility:public"],
+    pure = "on"
+)
+
+pkg_tar(
+    name = "app_tar",
+    srcs = [":v2-service"],
+    package_dir = "/",
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_base",
+    entrypoint = ["/v2-service"],
+    tars = [":app_tar"],
+)
+
+oci_load(
+    name = "load",
+    image = ":image",
+    repo_tags =["v2-service:latest"],
+)
